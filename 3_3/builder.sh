@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ "$#" -ne 2 ]; then
+  echo "Usage: ./builder.sh <github-repo> <docker-image>"
+  exit 1
+fi
+
 GITHUB_REPO="$1"
 DOCKER_REPO="$2"
 
