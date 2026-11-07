@@ -1,0 +1,9 @@
+FROM ubuntu:20.04
+RUN apt-get update && apt-get install -y curl && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y nodejs && useradd -m appuser && npm install && npm run build && npm install -g serve
+WORKDIR /usr/src/app
+COPY code/example-frontend .
+ENV REACT_APP_BACKEND_URL=http://localhost:8080
+EXPOSE 5001
+USER appuser
+CMD ["serve", "-s", "-l", "5001", "build"]
