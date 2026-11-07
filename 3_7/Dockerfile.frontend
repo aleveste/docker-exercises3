@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:16:alpine
 WORKDIR /usr/src/app
 COPY code/example-frontend .
 ENV REACT_APP_BACKEND_URL=http://localhost:8080
