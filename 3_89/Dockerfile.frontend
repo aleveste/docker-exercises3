@@ -1,15 +1,15 @@
 FROM node:16-alpine AS build
 WORKDIR /usr/src/app
-COPY package*.json ./
+COPY code/example-frontend/package*.json ./
 RUN npm install 
-COPY . .
+COPY code/example-frontend .
 ENV REACT_APP_BACKEND_URL=http://localhost:8080
 RUN npm run build
-FROM scratch
+FROM node:16-alpine
 WORKDIR /usr/src/app
 RUN npm install -g serve && \
     adduser -D appuser
-COPY --from=build /usr/src/app/build ./build    
+COPY --from=build --chown=node:node /usr/src/app/build ./build    
 EXPOSE 5001
-USER appuser
+USER node
 CMD ["serve", "-s", "-l", "5001", "build"]
